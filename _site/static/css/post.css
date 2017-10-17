@@ -1,0 +1,13 @@
+div.content .post-title {
+    text-align: center;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+div.content .post-date {
+    text-align: center;
+}
+
+div.content .post-content {
+    margin: 0 10px;
+}
