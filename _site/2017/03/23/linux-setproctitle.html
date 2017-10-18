@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        
+                Qooqle | Linux系统编程之修改进程名
+        
+    </title>
+    <link rel="shortcut icon" type="image/png" href="/static/imgs/favicon16x16.png">
+    <link rel="stylesheet" href="/static/css/global.css">
+    
+    <!--    <link rel="stylesheet" href="/static/css/post.css"> -->
+    <!--    <link rel="stylesheet" href="/static/css/solarized.dark.css"> -->
+    
+</head>
+<body>
+    <header>
+        <h1><a class="logo" href="/">Qooqle</a></h1>
+        <ul class="nav">
+            <li><h2><a href="/categories.html">Categories</a></h2></li>
+            <li><h2><a href="/tags.html">Tags</a></h2></li>
+            <li><h2><a href="/about.html">About</a></h2></li>
+        </ul>
+    </header>
+
+    <div class="content">
+                <h3 class="post-title">Linux系统编程之修改进程名</h3>
+        <div class="post-date">Mar 23, 2017 by 李江明</div>
+        <div class="post-content">
+            <p>在调试nginx时，会发现在启动程序后有两个进程，分别是nginx: master和nginx: worker，显然它们的进程名都是经过修改的。在nginx源代码src/os/unix/ngx_setproctitle.c中的注释详细介绍了nginx使用的方法，以及实现。</p>
+
+<p>大致说的是在Linux中可以直接通过修改argv[0]来修改进程名，新名称长度小于等于argv[0]的长度直接修改没问题，否则会丢失内容。另外说了在进程中argv<a href="参数数组"></a>和environ<a href="环境参数数组"></a>是连续内存。然后我们可以通过备份environ[]中的数据，利用原有environ[]的内存来扩展原有argv[]的内存，这样我们就可以后移argv[0]之后的参数，留出一定长度的内存保证我们能存放新的进程名称。</p>
+
+<p>示例代码<a href="https://github.com/li-jiangming/test_codes/blob/master/linux_setproctitle.c">linux_setproctitle</a>。</p>
+
+
+        </div>
+
+    </div>
+    <footer>
+        Power by Jekyll, stored in Github.
+    </footer>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/footer_bottom.js"></script>
+</body>
+</html>
