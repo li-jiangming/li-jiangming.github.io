@@ -3,7 +3,7 @@
 name: Qooqle
 description:
 
-baseurl: lijiangming.com
+baseurl: "/"
 
 permalink: /:year/:month/:day/:title
 paginate: 50
