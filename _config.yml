@@ -3,7 +3,7 @@
 name: Qooqle
 description:
 
-baseurl: li-jiangming.github.io
+baseurl: lijiangming.com
 
 permalink: /:year/:month/:day/:title
 paginate: 50
