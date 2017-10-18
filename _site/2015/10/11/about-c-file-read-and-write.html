@@ -15,15 +15,16 @@
 </head>
 <body>
     <header>
-        <a class="logo" href="/">Qooqle</a>
+        <h1><a class="logo" href="/">Qooqle</a></h1>
         <ul class="nav">
-            <li><a href="/categories.html">Categories</a></li>
-            <li><a href="/tags.html">Tags</a></li>
-            <li><a href="/about.html">About</a></li>
+            <li><h2><a href="/categories.html">Categories</a></h2></li>
+            <li><h2><a href="/tags.html">Tags</a></h2></li>
+            <li><h2><a href="/about.html">About</a></h2></li>
         </ul>
     </header>
+
     <div class="content">
-            <div class="post-title">关于c语言文件读写</div>
+            <h3 class="post-title">关于c语言文件读写</h3>
     <div class="post-date">Oct 11, 2015</div>
     <div class="post-content">
         <p>这几天在做多线程文件下载工具，遇到关于文件读写一些以前没有注意的问题。</p>
@@ -50,6 +51,7 @@
 <p>在我的多线程下载工具中，多个线程打开本地同一个文件，每个线程往文件中写入内容的位置都会有一个偏移量。为了设置偏移量和数据不清空的情况下向文件中写入数据，在下载任务开始前，先检测当前指定路径的文件是否存在，为确保不损坏已有文件数据，在确定当前目录下指定文件不存在的情况下，我使用<code class="highlighter-rouge">w</code>方式新建文件。在下载文件多线程任务中使用<code class="highlighter-rouge">r+b</code>方式打开文件，这样就是得到预期的功能。</p>
 
     </div>
+
     </div>
     <footer>
         Power by Jekyll, stored in Github.
