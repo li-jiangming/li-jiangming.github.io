@@ -74,6 +74,14 @@ div.content {
     margin: 30px;
 }
 
+div.content a {
+    color: #0000FF;
+}
+
+div.content a:visited {
+    color: #0000FF;
+}
+
 footer {
     margin: 20px 0;
     text-align: center;
