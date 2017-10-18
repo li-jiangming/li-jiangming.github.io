@@ -3,11 +3,6 @@
     src: url('/static/fonts/DancingScript-Regular.ttf');
 }
 
-@font-face {
-    font-family: SourceCodePro;
-    src: url('/static/fonts/SourceCodePro-Medium.ttf.woff2');
-}
-
 a {
     text-decoration: none;
 }
@@ -15,7 +10,7 @@ a {
 body {
     margin: 0 auto;
     padding: 0;
-    font-family: SourceCodePro;
+    font-family: Source Code Pro, Source Sans Pro;
 }
 
 @media screen and (min-width: 800px) {

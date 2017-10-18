@@ -1,0 +1,11 @@
+div.content .post-title {
+    text-align: center;
+}
+
+div.content .post-date {
+    text-align: center;
+}
+
+div.content .post-content {
+    margin: 0 10px;
+}

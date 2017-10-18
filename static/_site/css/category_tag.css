@@ -1,0 +1,7 @@
+ul.categories li, ul.tags li {
+    display: inline-block;
+}
+
+div.content ul li a:visited, div.content ul li a:visited {
+    color: #0000FF;
+}

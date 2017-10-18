@@ -1,3 +1,13 @@
+@font-face {
+    font-family: DancingScript;
+    src: url('/static/fonts/DancingScript-Regular.ttf');
+}
+
+@font-face {
+    font-family: SourceCodePro;
+    src: url('/static/fonts/SourceCodePro-Medium.ttf.woff2');
+}
+
 a {
     text-decoration: none;
 }
@@ -5,6 +15,7 @@ a {
 body {
     margin: 0 auto;
     padding: 0;
+    font-family: SourceCodePro;
 }
 
 @media screen and (min-width: 800px) {
@@ -47,6 +58,7 @@ header h1{
     display: inline-block;
     margin-right: 20px;
     vertical-align: top;
+    font-family: DancingScript;
     color: #000;
 }
 
