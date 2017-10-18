@@ -13,7 +13,7 @@
     {% if page.title %}
     <link rel="stylesheet" href="{{ site.baseurl }}/static/css/post.css">
     <link rel="stylesheet" href="{{ site.baseurl }}/static/css/solarized.dark.css">
-    {% elsif page.url == site.baseurl %}
+    {% elsif page.url == "/" %}
     <link rel="stylesheet" href="{{ site.baseurl }}/static/css/posts.css">
     {% elsif page.url contains 'categories' or page.url contains 'tags' %}
     <link rel="stylesheet" href="{{ site.baseurl }}/static/css/category_tag.css">
