@@ -4,7 +4,7 @@ layout: default
         <h3>Categories</h3>
         <ul class="categories">
             {% for category in site.categories %}
-                <li><a href="#{{ category | first }}" title="{{ category | first }}">{{ category | first }}</a><sub>{{ category | last | size }}</sub></li>
+                <li><a href="#{{ category | first }}" title="{{ category | first }}">{{ category | first }}</a><sup>{{ category | last | size }}</sup></li>
             {% endfor %}
         </ul>
         

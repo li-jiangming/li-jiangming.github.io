@@ -31,10 +31,15 @@
 
 <ol>
   <li>
-    <p>更新Ports</p>
+    <p>更新Ports和pkg</p>
 
     <div class="highlighter-rouge"><pre class="highlight"><code> portsnap fetch extract
  portsnap update
+
+ 或
+
+ pkg update
+ pkg upgrade
 </code></pre>
     </div>
   </li>
@@ -43,6 +48,10 @@
 
     <div class="highlighter-rouge"><pre class="highlight"><code> cd /usr/ports/net/shadowsocks-libev/
  make install clean
+
+ 或
+
+ pkg install shadowsocks-libev
 </code></pre>
     </div>
   </li>

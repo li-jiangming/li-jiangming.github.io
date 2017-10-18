@@ -7,15 +7,24 @@ tags: FreeBSD Shadowsocks_libev
 
 在DigitalOcean上面创建了一个FreeBSD 11.0系统的Droplet,首先还是自己搭建个VPN，方便访问Google以及其他的被墙的内容，这里介绍安装和配置shadowsocks-libev。
 
-1. 更新Ports
+1. 更新Ports和pkg
 
         portsnap fetch extract
         portsnap update
+
+        或
+
+        pkg update
+        pkg upgrade
 
 2. 安装shadowsocks-libev
 
         cd /usr/ports/net/shadowsocks-libev/
         make install clean
+
+        或
+
+        pkg install shadowsocks-libev
 
 3. 编辑配置文件/etc/rc.conf
 
