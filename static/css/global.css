@@ -25,9 +25,6 @@ body {
 
     ul.nav {
         display: inline-block;
-        list-style-type: none;
-        margin-top: 10px;
-        padding: 0;
     }
 
     ul.nav li {
@@ -41,8 +38,9 @@ body {
 }
 
 @media screen and (max-width: 799px) {
-    ul.nav {
-        display: none;
+    ul.nav li {
+        width: 100%;
+        text-align: center;
     }
     
     .fixed-bottom {
@@ -68,6 +66,11 @@ header a {
 
 header a:visited {
     color: #000;
+}
+
+ul.nav {
+    list-style-type: none;
+    padding: 0;
 }
 
 div.content {

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        {% if page.title %}
-                {{ site.name }} | {{ page.title }}
-        {% else %}
+        {% if page.title == 'Posts' %}
                 {{ site.name }}
+        {% else %}
+                {{ site.name }} | {{ page.title }}
         {% endif %}
     </title>
     <link rel="shortcut icon" type="image/png" href="{{ site.baseurl }}/static/imgs/favicon16x16.png">
