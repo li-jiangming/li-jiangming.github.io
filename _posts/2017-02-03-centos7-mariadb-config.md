@@ -7,20 +7,20 @@ tags: CentOS7 Mariadb
 
 以前一直使用`mysql`作为我的首选数据库，目前在Centos7上面我使用`mariadb`作为数据库，它和`mysql`的操作管理方式几乎一样。
 
-## 安装mariadb-server
+#### 安装mariadb-server
 
 ```
 yum install mariadb-server
 ```
 
-## 启动mariadb服务
+#### 启动mariadb服务
 
 ```
 systemctl enable mariadb
 systemctl start mariadb
 ```
 
-## 设置root密码
+#### 设置root密码
 
 以前在安装`mysql`的过程中会有提示框提示设置`root`用户密码,在安装`mariadb-server`的过程中没有设置`root`密码这一步，初始密码为空。
 
@@ -28,9 +28,9 @@ systemctl start mariadb
 mysqladmin -u root -p password
 ```
 
-## 远程连接
+#### 远程连接
 
-### 防火墙
+##### 防火墙
 
 在防火墙中添加`mariadb-server`运行端口，默认端口为`3306`。
 
@@ -38,7 +38,7 @@ mysqladmin -u root -p password
 firewall-cmd --add-port=3306/tcp
 ```
 
-### 添加用户和设置权限
+##### 添加用户和设置权限
 
 ```
 grant 权限 on 数据库名.数据库表名 用户名@远程地址 identified by '密码';
@@ -54,12 +54,12 @@ grant 权限 on 数据库名.数据库表名 用户名@远程地址 identified b
 
 密码是用户名对应的登陆密码。
 
-### 刷新系统权限
+##### 刷新系统权限
 
 ```
 flush privileges;
 ```
 
-## 客户端连接
+#### 客户端连接
 
 按照上面步骤操作，在客户端使用服务器ip地址和mariadb监听端口，以及有远程连接权限的用户登陆。
