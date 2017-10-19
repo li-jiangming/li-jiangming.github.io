@@ -9,7 +9,9 @@ tags: C File
 
 ```c
 #include <stdio.h>
-FILE *fopen(const char *path, const char *mode);
+
+FILE *
+fopen(const char *path, const char *mode);
 ```
 
 `fopen`函数需要两个参数，第一个参数`path`是要打开文件的路径，第二个参数`mode`是要打开文件的方式。

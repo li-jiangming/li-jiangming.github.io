@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        
+                Qooqle | 整理GDB程序调试
+        
+    </title>
+    <link rel="shortcut icon" type="image/png" href="/static/imgs/favicon16x16.png">
+    <link rel="stylesheet" href="/static/css/global.css">
+    
+    <!--    <link rel="stylesheet" href="/static/css/post.css"> -->
+    <!--    <link rel="stylesheet" href="/static/css/solarized.dark.css"> -->
+    
+</head>
+<body>
+    <header>
+        <h1><a class="logo" href="/">Qooqle</a></h1>
+        <ul class="nav">
+            <li><h2><a href="/categories.html">Categories</a></h2></li>
+            <li><h2><a href="/tags.html">Tags</a></h2></li>
+            <li><h2><a href="/about.html">About</a></h2></li>
+        </ul>
+    </header>
+
+    <div class="content">
+                <h3 class="post-title">整理GDB程序调试</h3>
+        <div class="post-date">Mar 19, 2017 by 李江明</div>
+        <div class="post-content">
+            <p>参考了<a href="http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/gdb.html">gdb调试利器</a>，对命令进行了测试。</p>
+
+<h2 id="gdb">使用GDB调试的前提</h2>
+
+<p>在编译程序时需加<code class="highlighter-rouge">-g</code>选项。</p>
+
+<h2 id="gdb-1">GDB调试准备</h2>
+
+<h3 id="section">带参程序</h3>
+
+<ol>
+  <li><code class="highlighter-rouge">set args 参数列表</code>：给需要参数的程序添加参数，例：<code class="highlighter-rouge">set args 10</code>。</li>
+  <li><code class="highlighter-rouge">show args</code>：查看参数列表内容。</li>
+</ol>
+
+<h3 id="section-1">运行环境</h3>
+
+<ol>
+  <li><code class="highlighter-rouge">set &lt;path&gt;</code>：设置程序运行环境，例：<code class="highlighter-rouge">set /home/user</code>。</li>
+  <li><code class="highlighter-rouge">show paths</code>：查看当前的运行环境。</li>
+</ol>
+
+<h3 id="section-2">环境变量</h3>
+
+<ol>
+  <li><code class="highlighter-rouge">set environment key=value</code>：设置环境变量。</li>
+  <li><code class="highlighter-rouge">show environment key</code>：查看环境变量名为<code class="highlighter-rouge">key</code>的值。</li>
+</ol>
+
+<h2 id="gdb-2">GDB调试步进</h2>
+
+<ol>
+  <li><code class="highlighter-rouge">run(r)</code>：执行此命令即程序以调试模式开始运行，直到遇到断点停止或程序结束。</li>
+  <li><code class="highlighter-rouge">continue(c)</code>：从当前断点位置继续执行，直到下一个断点停止或程序结束。</li>
+  <li><code class="highlighter-rouge">next(n)</code>：单步执行，遇到函数时不进入函数体，相当于我们经常在IDE中调试使用的<code class="highlighter-rouge">F10</code>。</li>
+  <li><code class="highlighter-rouge">step(s)</code>：单步执行，遇到函数时进入函数体，相当于我们经常在IDE中调试使用的<code class="highlighter-rouge">F11</code>。</li>
+</ol>
+
+<h2 id="gdb-3">GDB断点设置</h2>
+
+<ol>
+  <li><code class="highlighter-rouge">break(b)</code>：可接行号或函数名，可带上路径和文件名，例：<code class="highlighter-rouge">break a.c:10</code>。</li>
+  <li><code class="highlighter-rouge">delete n</code>：断点号<code class="highlighter-rouge">n</code>可使用<code class="highlighter-rouge">info b</code>查看，用来删除某个断点。</li>
+  <li><code class="highlighter-rouge">disable n</code>：屏蔽断点号为<code class="highlighter-rouge">n</code>的断点。</li>
+  <li><code class="highlighter-rouge">enable n</code>：激活断点号为<code class="highlighter-rouge">n</code>的断点。</li>
+  <li><code class="highlighter-rouge">clear n</code>：清除第<code class="highlighter-rouge">n</code>行的断点。</li>
+  <li><code class="highlighter-rouge">info b(breakpoints)</code>：查看当前程序设置的所有断点的信息。</li>
+  <li><code class="highlighter-rouge">delete breakpoints</code>：删除当前程序的所有断点。</li>
+</ol>
+
+<h2 id="section-3">打印表达式</h2>
+
+<ol>
+  <li><code class="highlighter-rouge">print(p) 表达式</code>：表达式可以是变量或函数，打印表达式的值，打印前会计算表达式。</li>
+  <li><code class="highlighter-rouge">display 表达式</code>：设置此变量后，每次单步执行都将打印表达式的值。</li>
+  <li><code class="highlighter-rouge">whatis 表达式</code>：查看表达式的类型信息。</li>
+  <li><code class="highlighter-rouge">info function</code>：查看函数地址信息。</li>
+  <li><code class="highlighter-rouge">info locals</code>：查看当前堆栈页所有变量的信息。</li>
+</ol>
+
+<h2 id="section-4">查看源码</h2>
+
+<p><code class="highlighter-rouge">list(l)</code>：查看源码。有下列几种情况：<br />
+1. 程序未运行，第一次执行不带参数，从第一行开始；<br />
+2. 程序运行过程中，则显示当前运行位置的内容。默认每次输出十行；<br />
+3. 带参数时，可跟行号或函数名；<br />
+4. 不带参数时，则接着输出上一次输出之后的内容。</p>
+
+<h2 id="section-5">查看栈</h2>
+
+<p><code class="highlighter-rouge">backtrace(bt)</code>：查看栈信息。带参和不带参说明：</p>
+
+<ol>
+  <li>不带参，查看当前函数的栈信息。</li>
+  <li>带参，只查看当前函数指定行数的栈信息。</li>
+</ol>
+
+<h2 id="section-6">分割窗口</h2>
+
+<p><code class="highlighter-rouge">layout</code>：分割窗口。后可跟下列几个参数之一：</p>
+
+<ol>
+  <li><code class="highlighter-rouge">src</code>：源码窗口。</li>
+  <li><code class="highlighter-rouge">asm</code>：反汇编窗口。</li>
+  <li><code class="highlighter-rouge">split</code>：源码和反汇编窗口。</li>
+  <li><code class="highlighter-rouge">regs</code>：反汇编和CPU寄存器窗口。</li>
+</ol>
+
+<h2 id="section-7">其他</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">quit(q)</code>：退出<code class="highlighter-rouge">GDB</code>。</li>
+  <li><code class="highlighter-rouge">info terminal</code>：查看终端信息。</li>
+  <li>执行<code class="highlighter-rouge">shell</code>命令<code class="highlighter-rouge">cd</code>切换目录，命令<code class="highlighter-rouge">pwd</code>查看当前目录。</li>
+</ul>
+
+
+        </div>
+
+    </div>
+    <footer>
+        Power by Jekyll, stored in Github.
+    </footer>
+    <script type="text/javascript" src="/static/js/footer_bottom.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+@font-face {
+    font-family: DancingScript;
+    src: url('/static/fonts/DancingScript-Regular.ttf');
+}
+
+@font-face {
+    font-family: SourceCodePro;
+    src: url('/static/fonts/SourceCodePro-Medium.ttf.woff2');
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    margin: 0 auto;
+    padding: 0;
+    font-family: SourceCodePro;
+}
+
+@media screen and (min-width: 800px) {
+    body {
+        width: 800px;
+    }
+
+    ul.nav {
+        display: inline-block;
+        list-style-type: none;
+        margin-top: 10px;
+        padding: 0;
+    }
+
+    ul.nav li {
+        float: left;
+        margin: 0 20px;
+    }
+    
+    .fixed-bottom {
+        width: inherit;
+    }
+}
+
+@media screen and (max-width: 799px) {
+    ul.nav {
+        display: none;
+    }
+    
+    .fixed-bottom {
+        width: 100%;
+    }
+}
+
+header {
+    padding: 0 10px;
+}
+
+header h1{
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: top;
+    font-family: DancingScript;
+    color: #000;
+}
+
+header a {
+    color: #000;
+}
+
+header a:visited {
+    color: #000;
+}
+
+div.content {
+    margin: 30px;
+}
+
+div.content a {
+    color: #0000FF;
+}
+
+div.content a:visited {
+    color: #0000FF;
+}
+
+footer {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.fixed-bottom {
+    position: absolute;
+    bottom: 0px;
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        
+                Qooqle | FreeBSD和Linux之修改进程名
+        
+    </title>
+    <link rel="shortcut icon" type="image/png" href="/static/imgs/favicon16x16.png">
+    <link rel="stylesheet" href="/static/css/global.css">
+    
+    <!--    <link rel="stylesheet" href="/static/css/post.css"> -->
+    <!--    <link rel="stylesheet" href="/static/css/solarized.dark.css"> -->
+    
+</head>
+<body>
+    <header>
+        <h1><a class="logo" href="/">Qooqle</a></h1>
+        <ul class="nav">
+            <li><h2><a href="/categories.html">Categories</a></h2></li>
+            <li><h2><a href="/tags.html">Tags</a></h2></li>
+            <li><h2><a href="/about.html">About</a></h2></li>
+        </ul>
+    </header>
+
+    <div class="content">
+                <h3 class="post-title">FreeBSD和Linux之修改进程名</h3>
+        <div class="post-date">Mar 23, 2017 by 李江明</div>
+        <div class="post-content">
+            <p>运行nginx时，会发现程序有两个进程，分别是：nginx: master和nginx: worker。显然它们的进程名都是经过修改的，在nginx源代码src/os/unix/ngx_setproctitle.c中的注释详细介绍了nginx使用的方法，以及实现。</p>
+
+<p>程序中可以直接通过修改argv的值，从而达到修改进程名的目的。新名称长度小于等于argv[0]的长度直接修改没问题，否则会丢失内容。在进程中argv<a href="参数数组"></a>和environ<a href="环境参数数组"></a>是连续内存，然后我们可以通过备份environ[]中的数据，利用原有environ[]的内存来扩展原有argv[]的内存，这样我们就可以后移argv[0]之后的参数，留出一定长度的内存保证我们能存放新的进程名称。</p>
+
+<p>FreeBSD提供了setproctitle(3)用以修改进程名，如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+</span>
+<span class="kt">void</span>
+<span class="n">setproctitle</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...);</span>
+</code></pre>
+</div>
+
+<p>Linux则没有提供相关功能的函数调用，自己简单实现一个，如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;sys/types.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdarg.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+</span>
+<span class="k">extern</span> <span class="kt">char</span> <span class="o">**</span><span class="n">environ</span><span class="p">;</span>
+
+<span class="cm">/* In main function, global_argv = argv */</span>
+<span class="k">extern</span> <span class="kt">char</span> <span class="o">**</span><span class="n">global_argv</span><span class="p">;</span>
+
+<span class="kt">void</span>
+<span class="nf">setproctitle</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span>
+<span class="p">{</span>
+        <span class="kt">size_t</span> <span class="n">size</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+        <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+        <span class="kt">va_list</span> <span class="n">va</span><span class="p">;</span>
+        <span class="kt">char</span> <span class="n">title</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+
+        <span class="n">va_start</span><span class="p">(</span><span class="n">va</span><span class="p">,</span> <span class="n">fmt</span><span class="p">);</span>
+        <span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">va</span><span class="p">);</span>
+        <span class="n">va_end</span><span class="p">(</span><span class="n">va</span><span class="p">);</span>
+
+        <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">environ</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+                <span class="n">size</span> <span class="o">+=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="p">)</span> <span class="o">*</span> <span class="n">size</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">NULL</span> <span class="o">==</span> <span class="n">p</span><span class="p">)</span>
+                <span class="k">return</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">environ</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">memcpy</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">environ</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">size</span><span class="p">);</span>
+                <span class="n">environ</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+                <span class="n">p</span> <span class="o">+=</span> <span class="n">size</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">global_argv</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">strcpy</span><span class="p">(</span><span class="n">global_argv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">"nginx: "</span><span class="p">);</span>
+                <span class="n">strcat</span><span class="p">(</span><span class="n">global_argv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">title</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+
+        </div>
+
+    </div>
+    <footer>
+        Power by Jekyll, stored in Github.
+    </footer>
+    <script type="text/javascript" src="/static/js/footer_bottom.js"></script>
+</body>
+</html>
