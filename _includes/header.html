@@ -10,17 +10,17 @@
                 {{ site.name }} | {{ page.title }}
         {% endif %}
     </title>
-    <link rel="shortcut icon" type="image/png" href="{{ site.baseurl }}/static/imgs/favicon16x16.png">
+    <link rel="shortcut icon" type="image/png" href="{{ site.baseurl }}/static/imgs/favicon17x16.png">
     <link rel="stylesheet" href="{{ site.baseurl }}/static/css/global.css">
     <link rel="stylesheet" href="{{ site.baseurl }}/static/css/github.css">
 </head>
 <body>
     <header>
-        <h1><a id="logo" href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
-        <a href="javascript:void(0);" onclick="menu()" id="menu"></a>
+        <h1><a id="logo" class="noselect" href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
+        <a class="noselect" onclick="menu()" id="menu"></a>
         <ul id="nav">
-            <li><h2><a href="{{ site.baseurl }}/categories.html">Categories</a></h2></li>
-            <li><h2><a href="{{ site.baseurl }}/tags.html">Tags</a></h2></li>
-            <li><h2><a href="{{ site.baseurl }}/about.html">About</a></h2></li>
+            <li><h2><a class="noselect" href="{{ site.baseurl }}/categories.html">Categories</a></h2></li>
+            <li><h2><a class="noselect" href="{{ site.baseurl }}/tags.html">Tags</a></h2></li>
+            <li><h2><a class="noselect" href="{{ site.baseurl }}/about.html">About</a></h2></li>
         </ul>
     </header>
