@@ -11,9 +11,7 @@ tags: FreeBSD Shadowsocks_libev
 
         portsnap fetch extract
         portsnap update
-
         或
-
         pkg update
         pkg upgrade
 
@@ -21,9 +19,7 @@ tags: FreeBSD Shadowsocks_libev
 
         cd /usr/ports/net/shadowsocks-libev/
         make install clean
-
         或
-
         pkg install shadowsocks-libev
 
 3. 编辑配置文件/etc/rc.conf
@@ -33,7 +29,7 @@ tags: FreeBSD Shadowsocks_libev
 
 4. 编辑config.json
 
-    使用`vi`打开config.json
+    使用vi打开config.json
 
         vi /usr/local/etc/shadowsocks-libev/config.json
 
@@ -50,4 +46,4 @@ tags: FreeBSD Shadowsocks_libev
 
 5. 启动Shadowsocks-libev服务
 
-        service shadowsocks_libev start
+    service shadowsocks_libev start

@@ -68,4 +68,3 @@ setproctitle(const char *fmt, ...)
         }
 }
 ```
-
