@@ -7,6 +7,8 @@ tags: C glibc
 
 #### 源码
 
+##### strlen
+
 ```c
 /* 引用自 glibc-2.26/string/strlen.c */
 size_t
@@ -81,6 +83,8 @@ strlen (const char *str)
     }
 }
 ```
+
+##### strchr
 
 ```c
 /* 引用自 glibc-2.26/string/strchr.c */
