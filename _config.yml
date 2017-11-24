@@ -16,7 +16,4 @@ kramdown:
 
 gems: ['jekyll-paginate']
 
-plugins:
-  - jekyll-sitemap
-
 exclude: ['README.md', 'LICENSE', 'CNAME']
