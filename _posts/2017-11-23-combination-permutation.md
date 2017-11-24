@@ -206,8 +206,8 @@ permutation(const int *nums, int nums_size, int n, int *rtn_size)
 #### 组合
 
 ```c
-#include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 /*
  * DFS
