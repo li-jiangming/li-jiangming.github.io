@@ -15,11 +15,11 @@ tags: C
  * DFS
  *
  * Args:
- *	1. deep：递归深度
- *	2. used：记录已使用的元素
- *	3. curr：当前取得的排列
- *	4. ans：保存最终结果排列数组
- *	5. ans_size 已取得排列个数
+ *  1. deep：递归深度
+ *  2. used：记录已使用的元素
+ *  3. curr：当前取得的排列
+ *  4. ans：保存最终结果排列数组
+ *  5. ans_size 已取得排列个数
  */
 void
 p1(const int *nums, int nums_size, int n, int deep,
@@ -152,10 +152,10 @@ p3(const int *nums, int nums_size, int n, int ***ans, int *ans_size)
  * 排列求解
  *
  * Args：
- *	1. nums：整形数组，排列源数据
- * 	2. nums_size：nums数组大小
- * 	3. n：从nums中取n个排列
- * 	4. rtn_size：返回结果数量
+ *  1. nums：整形数组，排列源数据
+ *  2. nums_size：nums数组大小
+ *  3. n：从nums中取n个排列
+ *  4. rtn_size：返回结果数量
  *
  * Return：
  *  返回保存所有组合的二维数组，二维数组包含rtn_size个一维数组，
