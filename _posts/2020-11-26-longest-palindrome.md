@@ -2,7 +2,7 @@
 layout: post
 title: 最长回文子串
 category: Study
-tags: c leetcode
+tags: C leetcode
 ---
 
 [leetcode][leetcode-link]
