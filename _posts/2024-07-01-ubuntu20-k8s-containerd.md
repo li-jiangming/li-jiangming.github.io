@@ -11,17 +11,21 @@ tags: DevOps k8s ubuntu20 containerd
 
 ```shell
 apt-get update && apt-get install -y apt-transport-https
-curl -fsSL https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/deb/Release.key | \
+    gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \
+    https://mirrors.aliyun.com/kubernetes-new/core/stable/v1.30/deb/ /" | \
+    tee /etc/apt/sources.list.d/kubernetes.list
 apt-get update && apt-get install -y kubelet kubeadm kubectl containerd
 ```
 
 containerd配置
 
 ```shell
-mkdir /etc/containerd		// 创建containerd配置路径，默认无此目录
+mkdir /etc/containerd // 创建containerd配置路径，默认无此目录
 containerd config default | tee /etc/containerd/config.toml //创建并写入默认配置文件
-sed -i 's#registry.k8s.io/pause:3.8#registry.aliyuncs.com/google_containers/pause:3.9#g' /etc/containerd/config.toml
+sed -i 's#registry.k8s.io/pause:3.8#registry.aliyuncs.com/google_containers/pause:3.9#g' \
+    /etc/containerd/config.toml
 sed -i 's#SystemdCgroup = false#SystemdCgroup = true#g' /etc/containerd/config.toml
 systemctl restart containerd // 重启服务
 ```
@@ -43,11 +47,11 @@ containerd镜像管理
 
 ```shell
 ctr -n k8s.io i ls/ctr -n k8s.io images ls // 查看namespace[k8s.io]中的镜像列表
-ctr plugin ls								// 查看插件列表
-ctr namespace ls/ctr ns ls 	// 查看namespace列表
-ctr -n k8s.io images list 	// 查看namespace为k8s.io中的镜像列表
+ctr plugin ls // 查看插件列表
+ctr namespace ls/ctr ns ls // 查看namespace列表
+ctr -n k8s.io images list // 查看namespace为k8s.io中的镜像列表
 ctr -n k8s.io images rm abc // 移除namespace为k8s.io中的ref为abc的镜像
-ctr images rm abc 					// 默认namespace为default,移除ref为abc的镜像
+ctr images rm abc // 默认namespace为default,移除ref为abc的镜像
 ```
 
 k8s初始化
@@ -67,7 +71,9 @@ kubeadm init \
 kubeadm reset -f
 
 // 记录kubeadm join命令，或后面重新生成
-openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //' // 获取cert
+openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | \
+    openssl rsa -pubin -outform der 2>/dev/null | \
+    openssl dgst -sha256 -hex | sed 's/^.* //' // 获取cert
 kubeadm token create --print-join-command --ttl 0 // 创建并打印join命令，永不过期(ttl=0)
 kubeadm init phase upload-certs --experimental-upload-certs // 重新生成certificate-key
 
@@ -111,7 +117,8 @@ kubectl get pod -l <label-name>=<label-value>,<label-name>=<label-value> // 条�
 ```shell
 kubectl run nginx \
 	--image=daocloud.io/nginx:latest \
-	--image-pull-policy=IfNotPresent \ // 优先从本地镜像中拉取，还有Always(从远程拉取)、Never(不从远程拉取)
+	--image-pull-policy=IfNotPresent \ // IfNotPresent(优先从本地镜像中拉取)
+                                       // Always(从远程拉取)、Never(不从远程拉取)
 	--replicas=3 \ // 创建3个副本
 	-env "xx=1" --env "yy=2" \ // 添加环境变量
 	--labels="xx=1,yy=2" // 添加标签
