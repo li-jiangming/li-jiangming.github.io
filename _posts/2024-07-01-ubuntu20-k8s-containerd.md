@@ -347,7 +347,7 @@ spec:
     - containerPort: 80
 ```
 
-// 启动探针
+启动探针
 
 pod-nginx-simple-startup.yaml
 
